@@ -2,13 +2,14 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "student")
 public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
@@ -16,6 +17,10 @@ public class Student {
 
     @Column(name = "age")
     private Integer age;
+
+    @OneToMany
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private List<Transcript> transcripts;
 
     public Student() {
     }
@@ -50,12 +55,11 @@ public class Student {
         this.age = age;
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                '}';
+    public List<Transcript> getTranscripts() {
+        return transcripts;
+    }
+
+    public void setTranscripts(List<Transcript> transcripts) {
+        this.transcripts = transcripts;
     }
 }
